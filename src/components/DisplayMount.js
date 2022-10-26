@@ -1,6 +1,6 @@
-import { useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
-export default function DisplayMount({ mount, removeFromCollection }) {
+export default function DisplayMount({ mount, removeFromCollection, index }) {
 
     let location = useLocation()
 
@@ -10,21 +10,34 @@ export default function DisplayMount({ mount, removeFromCollection }) {
             
             return (
                 <div>
-                    <img src={mount.image} alt=""/>
+                    <Link to={`/mycollection/${mount.id}`}>
+                        <img src={mount.image} alt={mount.name}/>
+                    </Link>
                     <h1>{mount.name}</h1>
-                    <h2>{mount.description}</h2>
-                    <p>{mount.enhanced_description}</p>
                     <button onClick={() => removeFromCollection(mount)}>Remove from Collection</button>
                 </div>
             )
 
+        } else if (location.pathname === "/mountlist") {
+
+            return (
+
+                <div>
+                    
+                    <img src={mount.image} alt={mount.name}/>
+                    <h1>{mount.name}</h1>
+            
+                </div>
+
+            )
+            
         } else {
 
             return (
 
                 <div>
                     
-                    <img src={mount.image} alt=""/>
+                    <img src={mount.image} alt={mount.name}/>
                     <h1>{mount.name}</h1>
                     <h2>{mount.description}</h2>
                     <p>{mount.enhanced_description}</p>

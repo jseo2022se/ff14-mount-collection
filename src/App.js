@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import { useEffect, useState } from 'react';
 import MountList from './pages/MountList';
 import MyCollection from './pages/MyCollection';
+import MountDetails from './pages/MountDetails';
+import Wishlist from './pages/Wishlist';
 
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
   const [uniqueMount, setUniqueMount] = useState({})
 
   const [collection, setCollection] = useState([])
+
+  const [wishlist, setWishlist] = useState([])
 
 
   let init = false
@@ -29,12 +33,23 @@ function App() {
     navigate('/mycollection')
   }
 
+  const addToWishlist = (mount) => {
+    setWishlist([...wishlist, mount])
+    alert(`Added ${mount.name} to wishlist.`)
+  }
 
   const removeFromCollection = (mount) => {
 
     let filterCollection = collection.filter((m) => m.id !== mount.id)
 
     setCollection(filterCollection)
+  }
+
+  const removeFromWishlist = (mount) => {
+
+    let filterWishlist = wishlist.filter((m) => m.id !== mount.id)
+
+    setWishlist(filterWishlist)
   }
 
   const getMounts = async () => {
@@ -46,8 +61,6 @@ function App() {
       const response = await fetch(`https://ffxivcollect.com/api/mounts/${randomNum}`)
 
       const data = await response.json()
-
-      // console.log(data)
 
       setMount(data)
 
@@ -68,8 +81,6 @@ function App() {
   
       const data = await response.json()
 
-      // console.log(data)
-
       setUniqueMount(data)
   
     } catch (err) {
@@ -88,6 +99,7 @@ function App() {
       init = true
     }
     
+    
   }, [])
 
 
@@ -104,6 +116,7 @@ function App() {
           element={
             <Home 
               mount={mount}
+              getMounts={getMounts}
               getMountWithName={getMountWithName}
             />
           } 
@@ -115,7 +128,9 @@ function App() {
             <MountList 
               uniqueMount={uniqueMount}
               collection= {collection}
-              addToCollection={addToCollection}/>
+              addToCollection={addToCollection}
+              addToWishlist={addToWishlist}
+            />
           }
         />
 
@@ -125,6 +140,25 @@ function App() {
             <MyCollection 
               collection={collection}
               removeFromCollection={removeFromCollection}
+            />
+          }
+        />
+
+        <Route
+          path='/mycollection/:index'
+          element={
+            <MountDetails 
+              collection={collection}
+            />
+          }
+        />
+
+        <Route
+          path='/wishlist'
+          element={
+            <Wishlist
+              wishlist={wishlist}
+              removeFromWishlist={removeFromWishlist}
             />
           }
         />

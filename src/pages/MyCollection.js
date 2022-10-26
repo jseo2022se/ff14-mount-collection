@@ -10,7 +10,6 @@ export default function MyCollection ({ collection, removeFromCollection }) {
                             <DisplayMount mount={mount} removeFromCollection={removeFromCollection}/>
                         </div>
             } )}
-            {/* {console.log(collection)} */}
             
         </div>
     )

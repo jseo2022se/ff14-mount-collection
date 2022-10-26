@@ -10,6 +10,9 @@ export default function Navbar () {
                 <li>
                     <Link to="/mycollection">My Collection</Link>
                 </li>
+                <li>
+                    <Link to="/wishlist">My Wishlist</Link>
+                </li>
             </ul>
         </div>
     )

@@ -1,20 +1,18 @@
 import DisplayMount from "../components/DisplayMount"
 
-export default function MountList ({ uniqueMount, collection, addToCollection }) {
+export default function MountList ({ uniqueMount, collection, addToCollection, addToWishlist }) {
 
     const partOfCollection = (mount) => {
+
         let check = collection.find((m) => m.id === mount.id)
-        if (check) {
-            return true
-        } else {
-            return false
-        }
+
+        return check ? true : false
     }
 
 
 
     const loaded = () => {
-        // console.log(uniqueMount)
+
         return (
             <div>
                 {uniqueMount.results?.map((mount, index) => {
@@ -28,7 +26,7 @@ export default function MountList ({ uniqueMount, collection, addToCollection })
                                     <button onClick={() => addToCollection(mount)}>Add to My Collection</button>
                                 }
                                 <div className="divider"></div>
-                                <button>Add to wishlist</button>
+                                <button onClick={() => addToWishlist(mount)}>Add to wishlist</button>
                                 <br /><br />
                             </div>
                 })}

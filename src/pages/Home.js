@@ -1,7 +1,8 @@
 import DisplayMount from "../components/DisplayMount";
 import Form from "../components/Form";
 
-export default function Home ({ mount, getMountWithName }) {
+export default function Home ({ mount, getMountWithName, getMounts }) {
+    
     return (
         <div>
             <h1>Home</h1>
