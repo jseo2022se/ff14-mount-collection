@@ -14,11 +14,13 @@ function App() {
 
   const [mount, setMount] = useState({})
 
-  const [uniqueMount, setUniqueMount] = useState({})
+  const [uniqueMount, setUniqueMount] = useState([])
 
   const [collection, setCollection] = useState([])
 
   const [wishlist, setWishlist] = useState([])
+
+  const [order, setOrder] = useState(true)
 
 
   let init = false
@@ -29,8 +31,6 @@ function App() {
   const addToCollection = (mount) => {
     setCollection([...collection, mount])
     alert(`Added ${mount.name} to collection.`)
-
-    navigate('/mycollection')
   }
 
   const addToWishlist = (mount) => {
@@ -50,6 +50,67 @@ function App() {
     let filterWishlist = wishlist.filter((m) => m.id !== mount.id)
 
     setWishlist(filterWishlist)
+  }
+
+  const sortList = (uniqueMount, order) => {
+    
+    let resultsArr = uniqueMount;
+
+    let sortedList
+    
+    if (order) {
+      sortedList = resultsArr.sort((a,b) => a.id - b.id)
+      setOrder(!order)
+
+    } else {
+      sortedList = resultsArr.sort((a,b) => b.id - a.id)
+      setOrder(!order)
+    }
+
+    setUniqueMount(sortedList)
+
+    navigate("/mountlist")
+  }
+
+  const sortCollection = (collection, order) => {
+
+    let resultsArr = collection;
+
+    let sortedList
+    
+    if (order) {
+      sortedList = resultsArr.sort((a,b) => a.id - b.id)
+      setOrder(!order)
+
+    } else {
+      sortedList = resultsArr.sort((a,b) => b.id - a.id)
+      setOrder(!order)
+    }
+
+    setCollection(sortedList)
+
+    navigate("/mycollection")
+  }
+
+  const sortWishlist = (wishlist, order) => {
+
+    let resultsArr = wishlist
+
+    let sortedList
+
+    if (order) {
+      sortedList = resultsArr.sort((a,b) => a.id - b.id)
+      setOrder(!order)
+
+    } else {
+      sortedList = resultsArr.sort((a,b) => b.id - a.id)
+      setOrder(!order)
+    }
+
+    setWishlist(sortedList)
+
+    navigate("/wishlist")
+
   }
 
   const getMounts = async () => {
@@ -81,7 +142,9 @@ function App() {
   
       const data = await response.json()
 
-      setUniqueMount(data)
+      console.log('checking data fetch' ,data)
+
+      setUniqueMount(data.results)
   
     } catch (err) {
       
@@ -130,6 +193,9 @@ function App() {
               collection= {collection}
               addToCollection={addToCollection}
               addToWishlist={addToWishlist}
+              sortList={sortList}
+              order={order}
+              wishlist={wishlist}
             />
           }
         />
@@ -140,6 +206,8 @@ function App() {
             <MyCollection 
               collection={collection}
               removeFromCollection={removeFromCollection}
+              sortCollection={sortCollection}
+              order={order}
             />
           }
         />
@@ -159,6 +227,8 @@ function App() {
             <Wishlist
               wishlist={wishlist}
               removeFromWishlist={removeFromWishlist}
+              sortWishlist={sortWishlist}
+              order={order}
             />
           }
         />

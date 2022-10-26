@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom"
 
-export default function DisplayMount({ mount, removeFromCollection, index }) {
+export default function DisplayMount({ mount, removeFromCollection }) {
 
     let location = useLocation()
 
@@ -13,7 +13,7 @@ export default function DisplayMount({ mount, removeFromCollection, index }) {
                     <Link to={`/mycollection/${mount.id}`}>
                         <img src={mount.image} alt={mount.name}/>
                     </Link>
-                    <h1>{mount.name}</h1>
+                    <h1>{mount.id}. {mount.name}</h1>
                     <button onClick={() => removeFromCollection(mount)}>Remove from Collection</button>
                 </div>
             )
@@ -25,7 +25,7 @@ export default function DisplayMount({ mount, removeFromCollection, index }) {
                 <div>
                     
                     <img src={mount.image} alt={mount.name}/>
-                    <h1>{mount.name}</h1>
+                    <h1>{mount.id}. {mount.name}</h1>
             
                 </div>
 
