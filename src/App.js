@@ -7,6 +7,7 @@ import MountList from './pages/MountList';
 import MyCollection from './pages/MyCollection';
 import MountDetails from './pages/MountDetails';
 import Wishlist from './pages/Wishlist';
+import PriorityForm from './components/PriorityForm';
 
 
 function App() {
@@ -111,6 +112,48 @@ function App() {
 
     navigate("/wishlist")
 
+  }
+
+  const addPriorityToWishlist = (value, id) => {
+    console.log(value, id)
+
+    let updatedWishlist = wishlist.map(m => {
+
+      if (m.id === id) {
+        return {...m, ...value}
+      } else {
+        return m
+      }
+    })
+
+    setWishlist(updatedWishlist)
+
+    navigate("/wishlist")
+
+    console.log(wishlist)
+
+  }
+
+  const sortByPriority = (wishlist, order) => {
+
+    let resultsArr = wishlist
+
+    let sortedList
+
+    if (order) {
+      sortedList = resultsArr.sort((a,b) => a?.priority - b?.priority)
+      setOrder(!order)
+
+    } else {
+      sortedList = resultsArr.sort((a,b) => b?.priority - a?.priority)
+      setOrder(!order)
+    }
+
+    setWishlist(sortedList)
+
+    navigate("/wishlist")
+
+    console.log(wishlist)
   }
 
   const getMounts = async () => {
@@ -228,8 +271,18 @@ function App() {
               wishlist={wishlist}
               removeFromWishlist={removeFromWishlist}
               sortWishlist={sortWishlist}
+              sortByPriority={sortByPriority}
               order={order}
             />
+          }
+        />
+
+        <Route
+          path='/wishlist/:index'
+          element={
+            <PriorityForm 
+              wishlist={wishlist}
+              addPriorityToWishlist={addPriorityToWishlist}/>
           }
         />
 

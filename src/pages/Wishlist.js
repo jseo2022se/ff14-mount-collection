@@ -1,7 +1,7 @@
 import DisplayMount from "../components/DisplayMount"
 import DisplayWishlist from "../components/DisplayWishlist"
 
-export default function Wishlist ({ wishlist, removeFromWishlist, sortWishlist, order }) {
+export default function Wishlist ({ wishlist, removeFromWishlist, sortWishlist, order, sortByPriority }) {
 
     if (wishlist.length == 0) {
         return (
@@ -19,6 +19,7 @@ export default function Wishlist ({ wishlist, removeFromWishlist, sortWishlist, 
                     wishlist={wishlist}
                     removeFromWishlist={removeFromWishlist}
                     sortWishlist={sortWishlist}
+                    sortByPriority={sortByPriority}
                     order={order}
                 />
             </div>
