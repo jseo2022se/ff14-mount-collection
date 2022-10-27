@@ -1,5 +1,6 @@
 import './App.css';
-import Navbar from './components/Navbar';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NavigationBar from './components/NavigationBar';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
 import { useEffect, useState } from 'react';
@@ -8,6 +9,8 @@ import MyCollection from './pages/MyCollection';
 import MountDetails from './pages/MountDetails';
 import Wishlist from './pages/Wishlist';
 import PriorityForm from './components/PriorityForm';
+import About from './pages/About';
+
 
 
 function App() {
@@ -115,7 +118,6 @@ function App() {
   }
 
   const addPriorityToWishlist = (value, id) => {
-    console.log(value, id)
 
     let updatedWishlist = wishlist.map(m => {
 
@@ -129,8 +131,6 @@ function App() {
     setWishlist(updatedWishlist)
 
     navigate("/wishlist")
-
-    console.log(wishlist)
 
   }
 
@@ -153,7 +153,6 @@ function App() {
 
     navigate("/wishlist")
 
-    console.log(wishlist)
   }
 
   const getMounts = async () => {
@@ -172,7 +171,7 @@ function App() {
       
       console.log("Error!" , err)
 
-    }
+    } 
 
   }
 
@@ -185,13 +184,12 @@ function App() {
   
       const data = await response.json()
 
-      console.log('checking data fetch' ,data)
-
       setUniqueMount(data.results)
   
     } catch (err) {
       
       console.log("Error! In fetching mount with that name" , err)
+
   
     }
 
@@ -213,7 +211,7 @@ function App() {
 
     <div className="App">
 
-      <Navbar />
+      <NavigationBar />
 
       <Routes>
 
@@ -285,6 +283,8 @@ function App() {
               addPriorityToWishlist={addPriorityToWishlist}/>
           }
         />
+
+        <Route path='/about' element={<About />} />
 
       </Routes>
 

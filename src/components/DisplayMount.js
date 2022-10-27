@@ -1,4 +1,6 @@
 import { Link, useLocation } from "react-router-dom"
+import Card from 'react-bootstrap/Card'
+
 
 export default function DisplayMount({ mount, removeFromCollection }) {
 
@@ -10,11 +12,17 @@ export default function DisplayMount({ mount, removeFromCollection }) {
             
             return (
                 <div>
-                    <Link to={`/mycollection/${mount.id}`}>
-                        <img src={mount.image} alt={mount.name}/>
-                    </Link>
-                    <h1>{mount.id}. {mount.name}</h1>
-                    <button onClick={() => removeFromCollection(mount)}>Remove from Collection</button>
+                    <Card>
+                        <Card.Body border="dark">
+                            <Card.Link as={Link} to={`/mycollection/${mount.id}`} style={{width: '300px'}}>
+                                <Card.Img style={{width: '300px'}} variant="top" src={mount.image} alt={mount.name}/>
+                            </Card.Link>
+                            <Card.Title><h1>{mount.id}. {mount.name}</h1></Card.Title>
+                            
+                        </Card.Body>
+                        
+                    </Card>
+                    <button style={{backgroundColor: 'orange'}} onClick={() => removeFromCollection(mount)}>Remove from Collection</button>
                 </div>
             )
 
@@ -23,27 +31,60 @@ export default function DisplayMount({ mount, removeFromCollection }) {
             return (
 
                 <div>
+                    <Card border="dark">
+                        <Card.Img variant="top" style={{width: '300px'}} src={mount.image} alt={mount.name}/>
+                        <Card.Body>
+                            <Card.Title><h1>{mount.id}. {mount.name}</h1></Card.Title>
+                        </Card.Body>
+                    </Card>
                     
-                    <img src={mount.image} alt={mount.name}/>
-                    <h1>{mount.id}. {mount.name}</h1>
-            
                 </div>
 
             )
             
         } else {
 
-            return (
+            if (mount.status === 404) {
 
-                <div>
-                    
-                    <img src={mount.image} alt={mount.name}/>
-                    <h1>{mount.name}</h1>
-                    <h2>{mount.description}</h2>
-                    <p>{mount.enhanced_description}</p>
-                    
-                </div>
-            )
+                return (
+                    <div>
+                        <Card>
+                            <Card.Body border="dark">
+                                <Card.Title><h1>Error in fetching data</h1></Card.Title>
+                            </Card.Body>
+                            <Card.Img style={{width: '450px'}} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQliwuc2o7LzVuzSC3tqWD7CYOF9f_O0Oa0PA&usqp=CAU' alt='noData'/>
+                        </Card>
+                        
+
+                    </div>
+                )
+
+            } else {
+
+                return (
+
+                    <div>
+                        <Card border="dark">
+                            <Card.Img variant="top" style={{ width: '300px'}} src={mount.image} alt={mount.name}/>
+                            <Card.Body>
+                                <Card.Title><h1>{mount.name}</h1></Card.Title>
+                                <Card.Body>
+                                    <h3>{mount.description}</h3>
+                                    <Card.Text>
+                                        {mount.enhanced_description}
+                                    </Card.Text>
+                                </Card.Body>
+                                
+                            </Card.Body>
+                            
+                        </Card>
+                        
+                        
+                    </div>
+                )
+            }
+
+            
         }
 
     }

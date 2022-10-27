@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import Button from 'react-bootstrap/Button'
 
 export default function Form({getMountWithName}) {
 
@@ -19,7 +20,7 @@ export default function Form({getMountWithName}) {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form style={{marginLeft: '20px'}} onSubmit={handleSubmit}>
                 <label htmlFor="search">Search:</label>
                 <br />
                 <input 
@@ -28,7 +29,7 @@ export default function Form({getMountWithName}) {
                     value={mountName}
                     onChange={handleChange}
                 />
-                <input type="submit" value="submit" />
+                <Button variant="outline-secondary" size="sm">Search</Button>
             </form>
         </div>
     )

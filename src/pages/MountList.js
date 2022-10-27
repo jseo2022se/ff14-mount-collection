@@ -1,4 +1,6 @@
 import DisplayMount from "../components/DisplayMount"
+import Button from 'react-bootstrap/Button'
+import Card from "react-bootstrap/Card"
 
 export default function MountList ({ uniqueMount, collection, addToCollection, addToWishlist, sortList, order, wishlist }) {
 
@@ -19,10 +21,19 @@ export default function MountList ({ uniqueMount, collection, addToCollection, a
 
     const loaded = () => {
 
-        if (uniqueMount.length == 0) {
+        if (uniqueMount.length === 0) {
 
             return (
-                <h1>No mounts found related to the query . . . </h1>
+                <div>
+                    <Card border="dark">
+                        <Card.Body>
+                            <Card.Title><h1>No mounts found related to the query . . . </h1></Card.Title>
+                        </Card.Body>                            
+                        <Card.Img style={{width: '300px'}} src="https://i.pinimg.com/originals/08/c8/83/08c883567cb023ade97c70d841d1b3b5.png"/>
+                    </Card>
+                    
+                </div>
+                
             )
 
         } else {
@@ -35,21 +46,23 @@ export default function MountList ({ uniqueMount, collection, addToCollection, a
                         return <div key={index}>
                                     <DisplayMount mount={mount} />
                                     {
-                                        partOfCollection(mount)
+                                        (partOfCollection(mount) || partOfWishlist(mount))
                                         ?
-                                        "Already collected"
+                                        <Button size="sm" variant="info" onClick={() => addToCollection(mount)} disabled>Add to My Collection</Button>
+                                        // null
                                         :
-                                        <button onClick={() => addToCollection(mount)}>Add to My Collection</button>
+                                        <Button size="sm" variant="info" onClick={() => addToCollection(mount)}>Add to My Collection</Button>
                                     }
 
                                     <div className="divider"></div>
                                     
                                     {
-                                        partOfWishlist(mount)
+                                        (partOfCollection(mount) || partOfWishlist(mount))
                                         ?
-                                        "On Wishlist"
+                                        <Button size="sm" variant="primary" onClick={() => addToWishlist(mount)} disabled>Add to wishlist</Button>
+                                        // null
                                         :
-                                        <button onClick={() => addToWishlist(mount)}>Add to wishlist</button>
+                                        <Button size="sm" variant="primary" onClick={() => addToWishlist(mount)}>Add to wishlist</Button>
                                     }
                                     
                                     <br /><br />
@@ -62,7 +75,7 @@ export default function MountList ({ uniqueMount, collection, addToCollection, a
     }
 
     const loading = () => {
-        return <div>Loadin....</div>
+        return <div>Loading....</div>
     }
 
 
