@@ -1,237 +1,216 @@
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import NavigationBar from './components/NavigationBar';
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import Home from './pages/Home';
-import { useEffect, useState } from 'react';
-import MountList from './pages/MountList';
-import MyCollection from './pages/MyCollection';
-import MountDetails from './pages/MountDetails';
-import Wishlist from './pages/Wishlist';
-import PriorityForm from './components/PriorityForm';
-import About from './pages/About';
-
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import NavigationBar from "./components/NavigationBar";
+import Home from "./pages/Home";
+import MountList from "./pages/MountList";
+import MyCollection from "./pages/MyCollection";
+import MountDetails from "./pages/MountDetails";
+import Wishlist from "./pages/Wishlist";
+import PriorityForm from "./components/PriorityForm";
+import About from "./pages/About";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 
 function App() {
 
+  // state variables 
+  const [mount, setMount] = useState({});
 
-  const [mount, setMount] = useState({})
+  const [uniqueMount, setUniqueMount] = useState([]);
 
-  const [uniqueMount, setUniqueMount] = useState([])
+  const [collection, setCollection] = useState([]);
 
-  const [collection, setCollection] = useState([])
+  const [wishlist, setWishlist] = useState([]);
 
-  const [wishlist, setWishlist] = useState([])
-
-  const [order, setOrder] = useState(true)
-
-
-  let init = false
-
-  let navigate = useNavigate()
+  const [order, setOrder] = useState(true);
 
 
+  let init = false;
+
+  let navigate = useNavigate();
+
+  
+  // adds mount to collection list
   const addToCollection = (mount) => {
-    setCollection([...collection, mount])
-    alert(`Added ${mount.name} to collection.`)
-  }
+    setCollection([...collection, mount]);
+    alert(`Added ${mount.name} to collection.`);
+  };
 
+  // adds mount to wishlist
   const addToWishlist = (mount) => {
-    setWishlist([...wishlist, mount])
-    alert(`Added ${mount.name} to wishlist.`)
-  }
+    setWishlist([...wishlist, mount]);
+    alert(`Added ${mount.name} to wishlist.`);
+  };
 
+  // removes a unique mount from collection list
   const removeFromCollection = (mount) => {
+    let filterCollection = collection.filter((m) => m.id !== mount.id);
 
-    let filterCollection = collection.filter((m) => m.id !== mount.id)
+    setCollection(filterCollection);
+  };
 
-    setCollection(filterCollection)
-  }
-
+  // removes a unqiue mount from wishlist
   const removeFromWishlist = (mount) => {
+    let filterWishlist = wishlist.filter((m) => m.id !== mount.id);
 
-    let filterWishlist = wishlist.filter((m) => m.id !== mount.id)
+    setWishlist(filterWishlist);
+  };
 
-    setWishlist(filterWishlist)
-  }
-
+  // sorts the mount list from search result by their id
   const sortList = (uniqueMount, order) => {
-    
     let resultsArr = uniqueMount;
 
-    let sortedList
-    
-    if (order) {
-      sortedList = resultsArr.sort((a,b) => a.id - b.id)
-      setOrder(!order)
+    let sortedList;
 
+    if (order) {
+      sortedList = resultsArr.sort((a, b) => a.id - b.id); // ascending order
+      setOrder(!order);
     } else {
-      sortedList = resultsArr.sort((a,b) => b.id - a.id)
-      setOrder(!order)
+      sortedList = resultsArr.sort((a, b) => b.id - a.id); // descending order
+      setOrder(!order);
     }
 
-    setUniqueMount(sortedList)
+    setUniqueMount(sortedList);
 
-    navigate("/mountlist")
-  }
+    navigate("/mountlist");
+  };
 
+  // sorts mounts in collection list by their id
   const sortCollection = (collection, order) => {
-
     let resultsArr = collection;
 
-    let sortedList
-    
-    if (order) {
-      sortedList = resultsArr.sort((a,b) => a.id - b.id)
-      setOrder(!order)
+    let sortedList;
 
+    if (order) {
+      sortedList = resultsArr.sort((a, b) => a.id - b.id); // ascending order
+      setOrder(!order);
     } else {
-      sortedList = resultsArr.sort((a,b) => b.id - a.id)
-      setOrder(!order)
+      sortedList = resultsArr.sort((a, b) => b.id - a.id); // descending order
+      setOrder(!order);
     }
 
-    setCollection(sortedList)
+    setCollection(sortedList);
 
-    navigate("/mycollection")
-  }
+    navigate("/mycollection");
+  };
 
+  // sorts mounts in wishlist by their id
   const sortWishlist = (wishlist, order) => {
+    let resultsArr = wishlist;
 
-    let resultsArr = wishlist
-
-    let sortedList
+    let sortedList;
 
     if (order) {
-      sortedList = resultsArr.sort((a,b) => a.id - b.id)
-      setOrder(!order)
-
+      sortedList = resultsArr.sort((a, b) => a.id - b.id); // ascending order
+      setOrder(!order);
     } else {
-      sortedList = resultsArr.sort((a,b) => b.id - a.id)
-      setOrder(!order)
+      sortedList = resultsArr.sort((a, b) => b.id - a.id); // descending order
+      setOrder(!order);
     }
 
-    setWishlist(sortedList)
+    setWishlist(sortedList);
 
-    navigate("/wishlist")
+    navigate("/wishlist");
+  };
 
-  }
-
+  // adds priority attribute to mounts on wishlist
   const addPriorityToWishlist = (value, id) => {
-
-    let updatedWishlist = wishlist.map(m => {
-
+    let updatedWishlist = wishlist.map((m) => {
       if (m.id === id) {
-        return {...m, ...value}
+        return { ...m, ...value };
       } else {
-        return m
+        return m;
       }
-    })
+    });
 
-    setWishlist(updatedWishlist)
+    setWishlist(updatedWishlist);
 
-    navigate("/wishlist")
+    navigate("/wishlist");
+  };
 
-  }
-
+  // sorts mounts on wishlist by priority instead
   const sortByPriority = (wishlist, order) => {
+    let resultsArr = wishlist;
 
-    let resultsArr = wishlist
-
-    let sortedList
+    let sortedList;
 
     if (order) {
-      sortedList = resultsArr.sort((a,b) => a?.priority - b?.priority)
-      setOrder(!order)
-
+      sortedList = resultsArr.sort((a, b) => a?.priority - b?.priority); // ascending order
+      setOrder(!order);
     } else {
-      sortedList = resultsArr.sort((a,b) => b?.priority - a?.priority)
-      setOrder(!order)
+      sortedList = resultsArr.sort((a, b) => b?.priority - a?.priority); // descending order
+      setOrder(!order);
     }
 
-    setWishlist(sortedList)
+    setWishlist(sortedList);
 
-    navigate("/wishlist")
+    navigate("/wishlist");
+  };
 
-  }
-
+  // fetches data from API
   const getMounts = async () => {
-
-    let randomNum = Math.floor(Math.random() * 298)
+    let randomNum = Math.floor(Math.random() * 298);
 
     try {
+      const response = await fetch(
+        `https://ffxivcollect.com/api/mounts/${randomNum}`
+      );
 
-      const response = await fetch(`https://ffxivcollect.com/api/mounts/${randomNum}`)
+      const data = await response.json();
 
-      const data = await response.json()
-
-      setMount(data)
-
+      setMount(data);
     } catch (err) {
-      
-      console.log("Error!" , err)
+      console.log("Error!", err);
+    }
+  };
 
-    } 
-
-  }
-
-
+  // fetches data from API by parameter
   const getMountWithName = async (mountName) => {
-
     try {
-      
-      const response = await fetch(`https://ffxivcollect.com/api/mounts?name_en_end=${mountName}`)
-  
-      const data = await response.json()
+      const response = await fetch(
+        `https://ffxivcollect.com/api/mounts?name_en_end=${mountName}`
+      );
 
-      setUniqueMount(data.results)
-  
+      const data = await response.json();
+
+      setUniqueMount(data.results);
     } catch (err) {
-      
-      console.log("Error! In fetching mount with that name" , err)
-
-  
+      console.log("Error! In fetching mount with that name", err);
     }
+  };
 
-  }
-
-
+  // initial load of page invokes fetching 
   useEffect(() => {
-
-    if(!init) {
-      getMounts()
-      init = true
+    if (!init) {
+      getMounts();
+      init = true;
     }
-    
-    
-  }, [])
+  }, []);
 
 
   return (
-
     <div className="App">
-
       <NavigationBar />
 
       <Routes>
-
         <Route
-          path='/'
+          path="/"
           element={
-            <Home 
+            <Home
               mount={mount}
               getMounts={getMounts}
               getMountWithName={getMountWithName}
             />
-          } 
+          }
         />
 
         <Route
-          path='/mountlist'
+          path="/mountlist"
           element={
-            <MountList 
+            <MountList
               uniqueMount={uniqueMount}
-              collection= {collection}
+              collection={collection}
               addToCollection={addToCollection}
               addToWishlist={addToWishlist}
               sortList={sortList}
@@ -242,9 +221,9 @@ function App() {
         />
 
         <Route
-          path='/mycollection'
+          path="/mycollection"
           element={
-            <MyCollection 
+            <MyCollection
               collection={collection}
               removeFromCollection={removeFromCollection}
               sortCollection={sortCollection}
@@ -254,16 +233,12 @@ function App() {
         />
 
         <Route
-          path='/mycollection/:index'
-          element={
-            <MountDetails 
-              collection={collection}
-            />
-          }
+          path="/mycollection/:index"
+          element={<MountDetails collection={collection} />}
         />
 
         <Route
-          path='/wishlist'
+          path="/wishlist"
           element={
             <Wishlist
               wishlist={wishlist}
@@ -276,18 +251,17 @@ function App() {
         />
 
         <Route
-          path='/wishlist/:index'
+          path="/wishlist/:index"
           element={
-            <PriorityForm 
+            <PriorityForm
               wishlist={wishlist}
-              addPriorityToWishlist={addPriorityToWishlist}/>
+              addPriorityToWishlist={addPriorityToWishlist}
+            />
           }
         />
 
-        <Route path='/about' element={<About />} />
-
+        <Route path="/about" element={<About />} />
       </Routes>
-
     </div>
   );
 }

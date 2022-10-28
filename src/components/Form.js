@@ -1,36 +1,44 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import Button from 'react-bootstrap/Button'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
-export default function Form({getMountWithName}) {
+// search form that invokes getMountWithName function with user input
+export default function Form({ getMountWithName }) {
 
-    let [mountName, setMountName] = useState('')
+  // state variables  
+  let [mountName, setMountName] = useState("");
 
-    let navigate = useNavigate()
 
-    const handleChange = (e) => {
-        setMountName(e.target.value)
-    }
+  let navigate = useNavigate();
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        getMountWithName(mountName)
-        navigate("/mountlist")
-    }
 
-    return (
-        <div>
-            <form style={{marginLeft: '20px'}} onSubmit={handleSubmit}>
-                <label htmlFor="search">Search:</label>
-                <br />
-                <input 
-                    id="search"
-                    type="text"
-                    value={mountName}
-                    onChange={handleChange}
-                />
-                <Button variant="outline-secondary" size="sm">Search</Button>
-            </form>
-        </div>
-    )
+  const handleChange = (e) => {
+    setMountName(e.target.value);
+  };
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getMountWithName(mountName);
+    navigate("/mountlist");
+  };
+
+
+  return (
+    <div>
+      <form style={{ marginLeft: "20px" }} onSubmit={handleSubmit}>
+        <label htmlFor="search">Search:</label>
+        <br />
+        <input
+          id="search"
+          type="text"
+          value={mountName}
+          onChange={handleChange}
+        />
+        <Button variant="outline-secondary" size="sm">
+          Search
+        </Button>
+      </form>
+    </div>
+  );
 }

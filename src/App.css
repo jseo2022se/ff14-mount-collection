@@ -1,10 +1,9 @@
 body {
-    margin: 0;
-
+  margin: 0;
 }
 
-.divider{
-    width:5px;
-    height:auto;
-    display:inline-block;
+.divider {
+  width: 5px;
+  height: auto;
+  display: inline-block;
 }
