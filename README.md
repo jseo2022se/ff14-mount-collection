@@ -58,6 +58,12 @@ Some of the technical challenges I faced during the project were:
 - FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd.
   FINAL FANTASY XIV © SQUARE ENIX CO., LTD.
 
+
+## Deployment
+
+- The React app is deployed through Netlify and is live through this URL: https://ff14mountorganizer.netlify.app
+
+
 ## License
 
 [MIT]
