@@ -20,9 +20,7 @@ export default function PriorityForm({ wishlist, addPriorityToWishlist }) {
 
 
   const handleChange = (evt) => {
-    console.log(evt.target.value);
     setPriority({ ...priority, [evt.target.name]: [evt.target.value] });
-    console.log(priority);
   };
 
   const handleSubmit = (evt) => {

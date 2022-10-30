@@ -42,6 +42,11 @@ export default function DisplayWishlist({
                   <h1>
                     {mount.id}. {mount.name}
                   </h1>
+                  {
+                    mount.priority
+                    &&
+                    <h2>Priority: {mount.priority[0]}</h2>
+                  }
                 </Card.Title>
               </Card.Body>
             </Card>
