@@ -11,12 +11,16 @@ export default function NavigationBar() {
           <Navbar.Brand
             as={Link}
             to="/"
-            onClick={() => window.location.reload()} // causes page reload when clicking on site name
+            onClick={() => {
+              window.location.pathname === "/" && window.location.reload() /*causes page reload when clicking on site name*/
+             } }
           >
             FF14 Mount Organizer
           </Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">
+            <Nav.Link as={Link} to="/" onClick={() => {
+              window.location.pathname === "/" && window.location.reload() /*causes page reload when clicking on site name*/
+             } }>
               Home
             </Nav.Link>
             <Nav.Link as={Link} to="/mycollection">
