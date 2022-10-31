@@ -27,7 +27,7 @@ Some of the technical challenges I faced during the project were:
 ## Future Implementations
 
 - meeting the stretch goals
-- adding more components to the website and make it more dynamic
+- adding more components to the website 
 - making use of the Bootstrap more
 
 
